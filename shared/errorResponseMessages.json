@@ -1,0 +1,108 @@
+{
+    "invalidJsonObject": {
+        "message": "Invalid JSON Object '{}'"
+    },
+    "invalidArray": {
+        "message": "Invalid Array '[]'"
+    },
+    "invalidJsonBody": {
+        "message": "Invalid JSON body"
+    },
+    "itemNotExist": {
+        "message": "Item doesn't exist"
+    },
+    "mandatoryIDqueryParam": {
+        "message": "Request must include query param 'ID'"
+    },
+    "users": {
+        "notFound": {
+            "message": "No users found"
+        },
+        "noLogin": {
+            "message": "Request body must contain 'login'"
+        },
+        "noPassword": {
+            "message": "Request body must contain 'password'"
+        },
+        "noClientId": {
+            "message": "Request body must contain 'clientID'"
+        }
+    },
+    "auditTrail": {
+        "noAuditTrail": {
+            "message": "Requested item does not have an Audit trail registered"
+        },
+        "noPermissions": {
+            "message": "Token has no permissions to audit this item"
+        },
+        "incorrectBody": {
+            "message": "Request body must contain 'propertyID'"
+        }
+    },
+    "file": {
+        "propNotFile": {
+            "message": "Property is not a file"
+        }
+    },
+    "itemFromProperty": {
+        "incorrectBody": {
+            "message": "Request body must contain 'filterPropertyID'"
+        }
+    },
+    "picture": {
+        "propNotImage": {
+            "message": "Property is not an image"
+        },
+        "incorrectBody": {
+            "propertyID": {
+                "message": "Request must include query param 'propertyID'"
+            },
+            "w": {
+                "message": "'1980S' must be an integer"
+            },
+            "h": {
+                "message": "'1080s' must be an integer"
+            },
+            "adj": {
+                "message": "adj must be one of those characters: s, f, w, h, d, c"
+            }
+        }
+    },
+    "itemTypes": {
+        "notFound": {
+            "message": "No ItemTypeIDs were found."
+        }
+    },
+    "properties": {
+        "incorrectBody": {
+            "message": "Request body must contain 'itemTypeID'"
+        }
+    },
+    "updateItems": {
+        "incongruent": "Not Updated (Incongruent properties)",
+        "itemNotExist": "Item doesn't exist",
+        "incorrectBody": {
+            "integerID": {
+                "message": "'998' must be an integer"
+            },
+            "id": {
+                "message": "Request body must contain 'ID'"
+            }
+        }
+    },
+    "getItems": {
+        "mandatoryFields": {
+            "message": "Request body must contain at least field 'itemTypeID' or field 'propertyIDs'"
+        },
+        "notInteger": {
+            "message": "'8' must be an integer"
+        }
+    },
+    "createItems": {
+        "notCreatePermissions": "Not created (At least 1 property has no WRITE permissions or its not visible)"
+    },
+    "deleteItems": {
+        "nok": "Not deleted",
+        "itemNotExist": "Item doesn't exist"
+    }
+}

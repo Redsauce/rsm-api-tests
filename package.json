@@ -1,0 +1,23 @@
+{
+  "name": "rsm-api-2.0-api-tests",
+  "version": "1.0.0",
+  "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./API-tests/*/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.redsauce.net/team-ja/rsm-api-2.0-api-tests.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "pactum": "^3.3.3"
+  },
+  "dependencies": {
+    "chai": "^4.3.7",
+    "dotenv": "^16.0.3"
+  }
+}
