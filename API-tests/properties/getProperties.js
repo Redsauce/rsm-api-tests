@@ -1,7 +1,7 @@
 const { spec } = require("pactum");
 const { baseUrl } = require('../../config');
-const { expectedJsonErrorMessageSchema } = require("../../schemas/schemas");
-const errorMessages = require('../../shared/errorResponseMessages.json');
+const { expectedJsonGenericSchema } = require("../../schemas/schemas");
+const reponseMessages = require('../../shared/reponseMessages.json');
 const functions = require('../../shared/sharedFunctions');
 
 require("dotenv").config();
@@ -55,8 +55,8 @@ describe("Get properties", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(404)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.itemNotExist);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.itemNotExist);
   });
 
   it("Checks error request must be a JSON object", async () => {
@@ -70,8 +70,8 @@ describe("Get properties", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.invalidJsonObject);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.invalidJsonObject);
   });
   it("Checks error request must contain propertyIDs or itemTypeID", async () => {
     const body = { ID: 3 };
@@ -80,8 +80,8 @@ describe("Get properties", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.properties.incorrectBody);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.properties.incorrectBody);
   });
 
   after(async () => {

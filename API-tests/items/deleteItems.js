@@ -1,8 +1,8 @@
 const { spec } = require("pactum");
 const { expect } = require('chai');
 const { baseUrl } = require('../../config');
-const { expectedJsonErrorMessageSchema } = require("../../schemas/schemas");
-const errorMessages = require('../../shared/errorResponseMessages.json');
+const { expectedJsonGenericSchema } = require("../../schemas/schemas");
+const reponseMessages = require('../../shared/reponseMessages.json');
 const functions = require('../../shared/sharedFunctions');
 
 require("dotenv").config();
@@ -19,24 +19,13 @@ describe("Delete items", async () => {
       IDs: [itemID]
     }];
 
-    const expectedJsonSchema = {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          itemTypeID: { type: "integer" },
-          itemID: { type: "string" },
-        },
-        required: ["itemTypeID", itemID],
-      },
-    };
-
     await spec()
       .delete(`${baseUrl}/items/delete.php`)
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(200)
-      .expectJsonSchema(expectedJsonSchema);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.deleteItems.deleted);
 
     expect(await functions.verifyItemExists(itemID, 8)).to.eql(404);
   });
@@ -52,38 +41,16 @@ describe("Delete items", async () => {
       IDs: [846],
     }];
 
-    const expectedJsonSchema = {
-      type: "array",
-      items: [
-        {
-          type: "object",
-          properties: {
-            [itemIDs[0]]: { type: "string" },
-            [itemIDs[1]]: { type: "string" },
-            itemTypeID: { type: "integer" }
-          },
-          required: ["itemTypeID", itemIDs[0], itemIDs[1]],
-        },
-        {
-          type: "object",
-          properties: {
-            846: { type: "string" },
-            itemTypeID: { type: "integer" }
-          },
-          required: ["itemTypeID", "846"],
-        },
-      ],
-    };
-    const response = await spec()
+    await spec()
       .delete(`${baseUrl}/items/delete.php`)
       .withHeaders("authorization", token)
       .withBody(body)
-      .expectStatus(200)
-      .expectJsonSchema(expectedJsonSchema);
+      .expectStatus(400)
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.deleteItems.notDeleted);
 
-    expect(await functions.verifyItemExists(itemIDs[0], 8)).to.eql(404);
-    expect(await functions.verifyItemExists(itemIDs[1], 8)).to.eql(404);
-    expect(response.body[1]['846']).to.eql(errorMessages.deleteItems.nok);
+    expect(await functions.verifyItemExists(itemIDs[0], 8)).to.eql(200);
+    expect(await functions.verifyItemExists(itemIDs[1], 8)).to.eql(200);
   });
 
   it("Checks an incorrect delete when item does not exist", async () => {
@@ -92,26 +59,13 @@ describe("Delete items", async () => {
       IDs: [7800909090909],
     }];
 
-    const expectedJsonSchema = {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          itemTypeID: { type: "integer" },
-          7800909090909: { type: "string" },
-        },
-        required: ["itemTypeID", "7800909090909"],
-      },
-    };
-
-    const response = await spec()
+    await spec()
       .delete(`${baseUrl}/items/delete.php`)
       .withHeaders("authorization", token)
       .withBody(body)
-      .expectStatus(200)
-      .expectJsonSchema(expectedJsonSchema);
-
-    expect(response.body[0]['7800909090909']).to.eql(errorMessages.deleteItems.itemNotExist);
+      .expectStatus(400)
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.itemNotExist)
   });
   it("Checks an incorrect delete when body is not array", async () => {
 
@@ -126,8 +80,8 @@ describe("Delete items", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.invalidArray);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.invalidArray);
 
     itemsToDelete.push(itemID);
   });
@@ -144,8 +98,8 @@ describe("Delete items", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.invalidArray);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.invalidArray);
 
     itemsToDelete.push(itemID);
 
@@ -165,8 +119,8 @@ describe("Delete items", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.invalidJsonObject);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.invalidJsonObject);
 
     itemsToDelete.push(itemID);
   });

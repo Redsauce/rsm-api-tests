@@ -1,7 +1,7 @@
 const { spec } = require("pactum");
 const { baseUrl } = require('../../config');
-const { expectedJsonErrorMessageSchema } = require("../../schemas/schemas.js");
-const errorMessages = require('../../shared/errorResponseMessages.json');
+const { expectedJsonGenericSchema } = require("../../schemas/schemas.js");
+const reponseMessages = require('../../shared/reponseMessages.json');
 require("dotenv").config();
 const token = process.env.RS_TOKEN;
 
@@ -28,8 +28,8 @@ describe("Get image", async () => {
         'propertyID': '886'
       })
       .expectStatus(404)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.itemNotExist);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.itemNotExist);
   });
 
   it("Checks error property is not an image", async () => {
@@ -41,8 +41,8 @@ describe("Get image", async () => {
         'propertyID': '58'
       })
       .expectStatus(404)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.picture.propNotImage);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.picture.propNotImage);
   });
 
 
@@ -52,8 +52,8 @@ describe("Get image", async () => {
       .withHeaders("authorization", token)
       .withQueryParams("propertyID", "888")
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.mandatoryIDqueryParam);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.mandatoryIDqueryParam);
   });
   it("Checks error missing propertyID", async () => {
     await spec()
@@ -61,8 +61,8 @@ describe("Get image", async () => {
       .withHeaders("authorization", token)
       .withQueryParams("ID", "88")
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.picture.incorrectBody.propertyID);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.picture.incorrectBody.propertyID);
   });
   it("Checks error incorrect w", async () => {
     await spec()
@@ -74,8 +74,8 @@ describe("Get image", async () => {
         'w': '1980S',
       })
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.picture.incorrectBody.w);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.picture.incorrectBody.w);
   });
   it("Checks error incorrect h", async () => {
     await spec()
@@ -87,8 +87,8 @@ describe("Get image", async () => {
         'h': '1080s',
       })
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.picture.incorrectBody.h);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.picture.incorrectBody.h);
   });
   it("Checks error incorrect adj", async () => {
     await spec()
@@ -100,7 +100,7 @@ describe("Get image", async () => {
         'adj': 'sw',
       })
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.picture.incorrectBody.adj);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.picture.incorrectBody.adj);
   });
 })

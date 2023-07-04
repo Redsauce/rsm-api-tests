@@ -79,6 +79,9 @@
         }
     },
     "updateItems": {
+        "updated": {
+            "message": "Updated"
+        },
         "incongruent": {
             "message": "Not Updated (Incongruent properties)"
         },
@@ -104,7 +107,11 @@
         "message": "Not created (At least 1 property has no WRITE permissions or its not visible)"
     },
     "deleteItems": {
-        "nok": "Not deleted",
-        "itemNotExist": "Item doesn't exist"
+        "deleted": {
+            "message": "Deleted"
+        },
+        "notDeleted": {
+            "message": "Not Deleted (At least 1 property has no DELETE permissions or its not visible)"
+        }
     }
 }

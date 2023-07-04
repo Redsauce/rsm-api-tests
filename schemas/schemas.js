@@ -1,4 +1,4 @@
-const expectedJsonErrorMessageSchema = {
+const expectedJsonGenericSchema = {
   type: "object",
   properties: {
     message: {
@@ -65,7 +65,7 @@ const expectedGetItemsJsonSchema = {
 };
 
 module.exports = {
-  expectedJsonErrorMessageSchema,
+  expectedJsonGenericSchema,
   expectedUserJsonSchema,
   expectedItemTypesJsonSchema,
   expectedCreateItemJsonSchema,

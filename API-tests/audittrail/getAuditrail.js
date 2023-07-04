@@ -1,7 +1,7 @@
 const { spec } = require("pactum");
 const { baseUrl } = require('../../config');
-const { expectedJsonErrorMessageSchema } = require("../../schemas/schemas.js");
-const errorMessages = require('../../shared/errorResponseMessages.json');
+const { expectedJsonGenericSchema } = require("../../schemas/schemas.js");
+const reponseMessages = require('../../shared/reponseMessages.json');
 require("dotenv").config();
 const token = process.env.RS_TOKEN;
 
@@ -56,8 +56,8 @@ describe("Get AuditTrail", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(200)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.auditTrail.noAuditTrail);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.auditTrail.noAuditTrail);
   });
 
   it("Checks error token has no permissions", async () => {
@@ -71,8 +71,8 @@ describe("Get AuditTrail", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(403)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.auditTrail.noPermissions);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.auditTrail.noPermissions);
   });
 
   it("Checks error request body not json object", async () => {
@@ -86,8 +86,8 @@ describe("Get AuditTrail", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.invalidJsonObject);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.invalidJsonObject);
   });
 
   it("Checks error request body not contains propertyID", async () => {
@@ -98,7 +98,7 @@ describe("Get AuditTrail", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.auditTrail.incorrectBody);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.auditTrail.incorrectBody);
   });
 });

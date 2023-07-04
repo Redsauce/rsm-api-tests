@@ -1,8 +1,8 @@
 const { spec } = require("pactum");
 const { expect } = require('chai');
 const { baseUrl } = require('../../config');
-const { expectedJsonErrorMessageSchema, expectedCreateItemJsonSchema } = require("../../schemas/schemas");
-const errorMessages = require('../../shared/errorResponseMessages.json');
+const { expectedJsonGenericSchema, expectedCreateItemJsonSchema } = require("../../schemas/schemas");
+const reponseMessages = require('../../shared/reponseMessages.json');
 const functions = require('../../shared/sharedFunctions');
 
 require("dotenv").config();
@@ -74,8 +74,8 @@ describe("Create items", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.createItemsNoPermissions);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.createItemsNoPermissions);
   });
 
   it("Checks an incorrect create without an array in body ", async () => {
@@ -89,8 +89,8 @@ describe("Create items", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.invalidArray);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.invalidArray);
   });
   it("Checks an incorrect create without an object inside the body array ", async () => {
     const body = [{
@@ -105,8 +105,8 @@ describe("Create items", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.invalidJsonObject);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.invalidJsonObject);
   });
 
   after(async () => {

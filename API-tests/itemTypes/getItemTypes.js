@@ -1,8 +1,8 @@
 const { spec } = require("pactum");
 const { expect } = require('chai');
 const { baseUrl } = require('../../config');
-const { expectedJsonErrorMessageSchema, expectedItemTypesJsonSchema } = require("../../schemas/schemas.js");
-const errorMessages = require('../../shared/errorResponseMessages.json');
+const { expectedJsonGenericSchema, expectedItemTypesJsonSchema } = require("../../schemas/schemas.js");
+const reponseMessages = require('../../shared/reponseMessages.json');
 
 require("dotenv").config();
 const token = process.env.RS_TOKEN;
@@ -34,7 +34,7 @@ describe("Get item types", async () => {
       .withHeaders("authorization", token)
       .withQueryParams("ID", "notexistingid")
       .expectStatus(404)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.itemTypes.notFound);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.itemTypes.notFound);
   });
 });

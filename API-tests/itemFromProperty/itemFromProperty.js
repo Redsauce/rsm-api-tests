@@ -1,7 +1,7 @@
 const { spec } = require("pactum");
 const { baseUrl } = require('../../config');
-const { expectedJsonErrorMessageSchema } = require("../../schemas/schemas");
-const errorMessages = require('../../shared/errorResponseMessages.json');
+const { expectedJsonGenericSchema } = require("../../schemas/schemas");
+const reponseMessages = require('../../shared/reponseMessages.json');
 require("dotenv").config();
 const token = process.env.RS_TOKEN;
 
@@ -77,8 +77,8 @@ describe("Get item from property", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(404)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.itemNotExist);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.itemNotExist);
 
   });
   it("Checks error request body is no json object ", async () => {
@@ -92,8 +92,8 @@ describe("Get item from property", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.invalidJsonBody);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.invalidJsonBody);
   });
   it("Checks error request body does not include necessary params ", async () => {
 
@@ -107,7 +107,7 @@ describe("Get item from property", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.itemFromProperty.incorrectBody);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.itemFromProperty.incorrectBody);
   });
 });

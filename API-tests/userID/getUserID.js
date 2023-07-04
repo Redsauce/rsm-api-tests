@@ -1,7 +1,7 @@
 const { spec } = require("pactum");
 const { baseUrl } = require('../../config');
-const { expectedJsonErrorMessageSchema, expectedUserJsonSchema } = require("../../schemas/schemas.js");
-const errorMessages = require('../../shared/errorResponseMessages.json');
+const { expectedJsonGenericSchema, expectedUserJsonSchema } = require("../../schemas/schemas.js");
+const reponseMessages = require('../../shared/reponseMessages.json');
 require("dotenv").config();
 
 const token = process.env.RS_TOKEN;
@@ -36,8 +36,8 @@ describe("Get UserID", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(404)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.users.notFound);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.users.notFound);
   });
 
   it("Checks error body not json object", async () => {
@@ -52,8 +52,8 @@ describe("Get UserID", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.invalidJsonObject);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.invalidJsonObject);
   });
 
   it("Checks error body no login", async () => {
@@ -67,8 +67,8 @@ describe("Get UserID", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.users.noLogin);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.users.noLogin);
   });
   it("Checks error body no password", async () => {
     const body = {
@@ -81,8 +81,8 @@ describe("Get UserID", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.users.noPassword);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.users.noPassword);
   });
 
   it("Checks error body no client id", async () => {
@@ -96,7 +96,7 @@ describe("Get UserID", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.users.noClientId);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.users.noClientId);
   });
 });

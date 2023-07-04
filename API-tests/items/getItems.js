@@ -1,8 +1,8 @@
 const { spec } = require("pactum");
 const { baseUrl } = require('../../config');
 const { expect } = require('chai');
-const { expectedJsonErrorMessageSchema, expectedGetItemsJsonSchema } = require("../../schemas/schemas");
-const errorMessages = require('../../shared/errorResponseMessages.json');
+const { expectedJsonGenericSchema, expectedGetItemsJsonSchema } = require("../../schemas/schemas");
+const reponseMessages = require('../../shared/reponseMessages.json');
 const functions = require('../../shared/sharedFunctions');
 
 require("dotenv").config();
@@ -279,8 +279,8 @@ describe("Get items", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.invalidJsonBody);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.invalidJsonBody);
   });
   it("Checks error request must contain propertyIDs or itemTypeID", async () => {
     const body = `{
@@ -292,8 +292,8 @@ describe("Get items", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.getItems.mandatoryFields);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.getItems.mandatoryFields);
 
   });
   it("Checks error request itemTypeID is not an integer", async () => {
@@ -306,8 +306,8 @@ describe("Get items", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.getItems.notInteger);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.getItems.notInteger);
   });
   it("Checks error request propertyIDs should be an array", async () => {
     const body = {
@@ -319,8 +319,8 @@ describe("Get items", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.invalidArray);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.invalidArray);
   });
   it("Checks error request IDs should be an array", async () => {
     const body = {
@@ -333,8 +333,8 @@ describe("Get items", async () => {
       .withHeaders("authorization", token)
       .withBody(body)
       .expectStatus(400)
-      .expectJsonSchema(expectedJsonErrorMessageSchema)
-      .expectBody(errorMessages.invalidArray);
+      .expectJsonSchema(expectedJsonGenericSchema)
+      .expectBody(reponseMessages.invalidArray);
   });
   after(async () => {
     await functions.deletePersonItems(itemIDs);
