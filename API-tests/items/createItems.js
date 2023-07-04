@@ -73,7 +73,7 @@ describe("Create items", async () => {
       .post(`${baseUrl}/items/create.php`)
       .withHeaders("authorization", token)
       .withBody(body)
-      .expectStatus(403)
+      .expectStatus(400)
       .expectJsonSchema(expectedJsonErrorMessageSchema)
       .expectBody(errorMessages.createItemsNoPermissions);
   });

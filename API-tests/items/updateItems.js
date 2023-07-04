@@ -110,42 +110,14 @@ describe("Update items tests", async () => {
       58: "newName2",
       99: "newSurname2"
     }];
-    const expectedJsonSchema = {
-      type: "array",
-      items: [
-        {
-          type: "object",
-          properties: {
-            itemTypeID: { type: "integer" },
-            ID: { type: "integer" },
-            58: { type: "string" },
-            59: { type: "string" },
-          },
-          required: ["itemTypeID", "ID", "58", "59"],
-        },
-        {
-          type: "object",
-          properties: {
-            ID: { type: "integer" },
-            error: { type: "string" },
-          },
-          required: ["ID", "error"],
-        },
-      ],
-    };
 
-    const response = await spec()
+    await spec()
       .patch(`${baseUrl}/items/update.php`)
       .withHeaders("authorization", token)
       .withBody(body)
-      .expectStatus(200)
-      .expectJsonSchema(expectedJsonSchema);
-
-    const afterUpdateProperties = await functions.getPersonItems([itemIDs[0]], [58, 59]);
-    expect(originalProperties[0]).to.not.deep.equal(afterUpdateProperties[0]);
-    expect(functions.verifyBodyContent(afterUpdateProperties[0], body[0])).to.be.true;
-    expect(response.body[1]['error']).to.eql(errorMessages.updateItems.incongruent);
-
+      .expectStatus(400)
+      .expectJsonSchema(expectedJsonErrorMessageSchema)
+      .expectBody(errorMessages.updateItems.incongruent);
   });
 
   it("Checks error item does not exist", async () => {
@@ -156,26 +128,14 @@ describe("Update items tests", async () => {
         59: "newSurname",
       }
     ];
-    const expectedJsonSchema = {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          ID: { type: "integer" },
-          error: { type: "string" }
-        },
-        required: ["ID", "error"],
-      }
-    };
-
-    const response = await spec()
+    await spec()
       .patch(`${baseUrl}/items/update.php`)
       .withHeaders("authorization", token)
       .withBody(body)
-      .expectStatus(200)
-      .expectJsonSchema(expectedJsonSchema);
+      .expectStatus(400)
+      .expectJsonSchema(expectedJsonErrorMessageSchema)
+      .expectBody(errorMessages.itemNotExist);
 
-    expect(response.body[0]['error']).to.eql(errorMessages.updateItems.itemNotExist);
 
   });
   it("Checks error request must be an array ", async () => {

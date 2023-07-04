@@ -79,7 +79,9 @@
         }
     },
     "updateItems": {
-        "incongruent": "Not Updated (Incongruent properties)",
+        "incongruent": {
+            "message": "Not Updated (Incongruent properties)"
+        },
         "itemNotExist": "Item doesn't exist",
         "incorrectBody": {
             "integerID": {
