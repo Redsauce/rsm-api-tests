@@ -61,7 +61,7 @@ describe("Create items", async () => {
     itemsToDelete.push(response.body[0].ID, response.body[1].ID);
 
   });
-  it("Checks a correct create 2 items, 1 with no permissions", async () => {
+  it("Checks an incorrect create with 2 items, 1 with no permissions", async () => {
     const body = [{
       58: "Name",
       59: "Surname",
@@ -69,44 +69,13 @@ describe("Create items", async () => {
       319: "436"
     }];
 
-    const expectedJsonSchema = {
-      type: "array",
-      items: [
-        {
-          type: "object",
-          properties: {
-            58: { type: "string" },
-            59: { type: "string" },
-            ID: { type: "integer" },
-          },
-          required: ["ID", "58", "59"],
-        },
-        {
-          type: "object",
-          properties: {
-            319: { type: "string" },
-            error: { type: "string" }
-          },
-          required: ["error", "319"],
-        },
-      ],
-    };
-
-    const response = await spec()
+    await spec()
       .post(`${baseUrl}/items/create.php`)
       .withHeaders("authorization", token)
       .withBody(body)
-      .expectStatus(200)
-      .expectJsonSchema(expectedJsonSchema);
-
-    const itemDetail = (await functions.getPersonItems([response.body[0].ID], [58, 59]))[0];
-
-    expect(response.body[1].error).to.eql(errorMessages.createItems.notCreatePermissions);
-    expect(itemDetail['58']).to.eql(body[0]['58']);
-    expect(itemDetail['59']).to.eql(body[0]['59']);
-    expect(await functions.verifyItemExists(response.body[0]['ID'], 8)).to.eql(200);
-
-    itemsToDelete.push(response.body[0].ID);
+      .expectStatus(403)
+      .expectJsonSchema(expectedJsonErrorMessageSchema)
+      .expectBody(errorMessages.createItemsNoPermissions);
   });
 
   it("Checks an incorrect create without an array in body ", async () => {

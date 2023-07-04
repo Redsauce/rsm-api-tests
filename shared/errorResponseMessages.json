@@ -98,8 +98,8 @@
             "message": "'8' must be an integer"
         }
     },
-    "createItems": {
-        "notCreatePermissions": "Not created (At least 1 property has no WRITE permissions or its not visible)"
+    "createItemsNoPermissions": {
+        "message": "Not created (At least 1 property has no WRITE permissions or its not visible)"
     },
     "deleteItems": {
         "nok": "Not deleted",
