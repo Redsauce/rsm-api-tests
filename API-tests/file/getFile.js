@@ -2,7 +2,7 @@ const { spec } = require("pactum");
 const { baseUrl } = require('../../config');
 
 const { expectedJsonGenericSchema } = require("../../schemas/schemas.js");
-const reponseMessages = require('../../shared/reponseMessages.json');
+const responseMessages = require('../../shared/responseMessages.json');
 require("dotenv").config();
 const token = process.env.RS_TOKEN;
 
@@ -40,7 +40,7 @@ describe("Get File", async () => {
       })
       .expectStatus(404)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.file.propNotFile);
+      .expectBody(responseMessages.file.propNotFile);
   });
 
   it("Checks error request params should be ID and propertyID", async () => {
@@ -53,6 +53,6 @@ describe("Get File", async () => {
       })
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.mandatoryIDqueryParam);
+      .expectBody(responseMessages.mandatoryIDqueryParam);
   });
 });

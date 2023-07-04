@@ -1,7 +1,7 @@
 const { spec } = require("pactum");
 const { baseUrl } = require('../../config');
 const { expectedJsonGenericSchema } = require("../../schemas/schemas.js");
-const reponseMessages = require('../../shared/reponseMessages.json');
+const responseMessages = require('../../shared/responseMessages.json');
 require("dotenv").config();
 const token = process.env.RS_TOKEN;
 
@@ -57,7 +57,7 @@ describe("Get AuditTrail", async () => {
       .withBody(body)
       .expectStatus(200)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.auditTrail.noAuditTrail);
+      .expectBody(responseMessages.auditTrail.noAuditTrail);
   });
 
   it("Checks error token has no permissions", async () => {
@@ -72,7 +72,7 @@ describe("Get AuditTrail", async () => {
       .withBody(body)
       .expectStatus(403)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.auditTrail.noPermissions);
+      .expectBody(responseMessages.auditTrail.noPermissions);
   });
 
   it("Checks error request body not json object", async () => {
@@ -87,7 +87,7 @@ describe("Get AuditTrail", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidJsonObject);
+      .expectBody(responseMessages.invalidJsonObject);
   });
 
   it("Checks error request body not contains propertyID", async () => {
@@ -99,6 +99,6 @@ describe("Get AuditTrail", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.auditTrail.incorrectBody);
+      .expectBody(responseMessages.auditTrail.incorrectBody);
   });
 });

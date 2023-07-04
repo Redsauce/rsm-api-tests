@@ -2,7 +2,7 @@ const { spec } = require("pactum");
 const { baseUrl } = require('../../config');
 const { expect } = require('chai');
 const { expectedJsonGenericSchema, expectedGetItemsJsonSchema } = require("../../schemas/schemas");
-const reponseMessages = require('../../shared/reponseMessages.json');
+const responseMessages = require('../../shared/responseMessages.json');
 const functions = require('../../shared/sharedFunctions');
 
 require("dotenv").config();
@@ -280,7 +280,7 @@ describe("Get items", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidJsonBody);
+      .expectBody(responseMessages.invalidJsonBody);
   });
   it("Checks error request must contain propertyIDs or itemTypeID", async () => {
     const body = `{
@@ -293,7 +293,7 @@ describe("Get items", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.getItems.mandatoryFields);
+      .expectBody(responseMessages.getItems.mandatoryFields);
 
   });
   it("Checks error request itemTypeID is not an integer", async () => {
@@ -307,7 +307,7 @@ describe("Get items", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.getItems.notInteger);
+      .expectBody(responseMessages.getItems.notInteger);
   });
   it("Checks error request propertyIDs should be an array", async () => {
     const body = {
@@ -320,7 +320,7 @@ describe("Get items", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidArray);
+      .expectBody(responseMessages.invalidArray);
   });
   it("Checks error request IDs should be an array", async () => {
     const body = {
@@ -334,7 +334,7 @@ describe("Get items", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidArray);
+      .expectBody(responseMessages.invalidArray);
   });
   after(async () => {
     await functions.deletePersonItems(itemIDs);

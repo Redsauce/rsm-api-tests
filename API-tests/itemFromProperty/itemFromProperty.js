@@ -1,7 +1,7 @@
 const { spec } = require("pactum");
 const { baseUrl } = require('../../config');
 const { expectedJsonGenericSchema } = require("../../schemas/schemas");
-const reponseMessages = require('../../shared/reponseMessages.json');
+const responseMessages = require('../../shared/responseMessages.json');
 require("dotenv").config();
 const token = process.env.RS_TOKEN;
 
@@ -78,7 +78,7 @@ describe("Get item from property", async () => {
       .withBody(body)
       .expectStatus(404)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.itemNotExist);
+      .expectBody(responseMessages.itemNotExist);
 
   });
   it("Checks error request body is no json object ", async () => {
@@ -93,7 +93,7 @@ describe("Get item from property", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidJsonBody);
+      .expectBody(responseMessages.invalidJsonBody);
   });
   it("Checks error request body does not include necessary params ", async () => {
 
@@ -108,6 +108,6 @@ describe("Get item from property", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.itemFromProperty.incorrectBody);
+      .expectBody(responseMessages.itemFromProperty.incorrectBody);
   });
 });

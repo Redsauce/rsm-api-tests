@@ -2,7 +2,7 @@ const { spec } = require("pactum");
 const { expect } = require('chai');
 const { baseUrl } = require('../../config');
 const { expectedJsonGenericSchema } = require("../../schemas/schemas");
-const reponseMessages = require('../../shared/reponseMessages.json');
+const responseMessages = require('../../shared/responseMessages');
 const functions = require('../../shared/sharedFunctions');
 
 require("dotenv").config();
@@ -25,7 +25,7 @@ describe("Delete items", async () => {
       .withBody(body)
       .expectStatus(200)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.deleteItems.deleted);
+      .expectBody(responseMessages.deleteItems.deleted);
 
     expect(await functions.verifyItemExists(itemID, 8)).to.eql(404);
   });
@@ -47,7 +47,7 @@ describe("Delete items", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.deleteItems.notDeleted);
+      .expectBody(responseMessages.deleteItems.notDeleted);
 
     expect(await functions.verifyItemExists(itemIDs[0], 8)).to.eql(200);
     expect(await functions.verifyItemExists(itemIDs[1], 8)).to.eql(200);
@@ -65,7 +65,7 @@ describe("Delete items", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.itemNotExist)
+      .expectBody(responseMessages.itemNotExist)
   });
   it("Checks an incorrect delete when body is not array", async () => {
 
@@ -81,7 +81,9 @@ describe("Delete items", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidArray);
+      .expectBody(responseMessages.invalidArray);
+    
+    expect(await functions.verifyItemExists(itemID, 8)).to.eql(200);
 
     itemsToDelete.push(itemID);
   });
@@ -99,8 +101,9 @@ describe("Delete items", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidArray);
-
+      .expectBody(responseMessages.invalidArray);
+    
+    expect(await functions.verifyItemExists(itemID, 8)).to.eql(200);
     itemsToDelete.push(itemID);
 
   });
@@ -120,8 +123,9 @@ describe("Delete items", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidJsonObject);
+      .expectBody(responseMessages.invalidJsonObject);
 
+    expect(await functions.verifyItemExists(itemID, 8)).to.eql(200);
     itemsToDelete.push(itemID);
   });
   after(async () => {

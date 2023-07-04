@@ -1,7 +1,7 @@
 const { spec } = require("pactum");
 const { baseUrl } = require('../../config');
 const { expectedJsonGenericSchema, expectedUserJsonSchema } = require("../../schemas/schemas.js");
-const reponseMessages = require('../../shared/reponseMessages.json');
+const responseMessages = require('../../shared/responseMessages.json');
 require("dotenv").config();
 
 const token = process.env.RS_TOKEN;
@@ -36,7 +36,7 @@ describe("Get StaffID", async () => {
       .withBody(body)
       .expectStatus(404)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.users.notFound);
+      .expectBody(responseMessages.users.notFound);
   });
 
   it("Checks error body not json object", async () => {
@@ -52,7 +52,7 @@ describe("Get StaffID", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidJsonObject);
+      .expectBody(responseMessages.invalidJsonObject);
   });
 
   it("Checks error body no login", async () => {
@@ -67,7 +67,7 @@ describe("Get StaffID", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.users.noLogin);
+      .expectBody(responseMessages.users.noLogin);
   });
   it("Checks error body no password", async () => {
     const body = {
@@ -81,7 +81,7 @@ describe("Get StaffID", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.users.noPassword);
+      .expectBody(responseMessages.users.noPassword);
   });
 
   it("Checks error body no client id", async () => {
@@ -96,6 +96,6 @@ describe("Get StaffID", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.users.noClientId);
+      .expectBody(responseMessages.users.noClientId);
   });
 });

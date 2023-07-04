@@ -1,7 +1,7 @@
 const { spec } = require("pactum");
 const { baseUrl } = require('../../config');
 const { expectedJsonGenericSchema } = require("../../schemas/schemas");
-const reponseMessages = require('../../shared/reponseMessages.json');
+const responseMessages = require('../../shared/responseMessages.json');
 
 require("dotenv").config();
 const token = process.env.RS_TOKEN;
@@ -36,7 +36,7 @@ describe("Get items count", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidJsonBody);
+      .expectBody(responseMessages.invalidJsonBody);
   });
   it("Checks error request must contain propertyIDs or itemTypeID", async () => {
     const body = `{
@@ -49,7 +49,7 @@ describe("Get items count", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.getItems.mandatoryFields);
+      .expectBody(responseMessages.getItems.mandatoryFields);
 
   });
   it("Checks error itemTypeID not integer", async () => {
@@ -61,7 +61,7 @@ describe("Get items count", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.getItems.notInteger);
+      .expectBody(responseMessages.getItems.notInteger);
   });
   it("Checks error request propertyIDs should be an array", async () => {
     const body = {
@@ -74,7 +74,7 @@ describe("Get items count", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidArray);
+      .expectBody(responseMessages.invalidArray);
   });
   it("Checks error request IDs should be an array", async () => {
     const body = {
@@ -88,7 +88,7 @@ describe("Get items count", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidArray);
+      .expectBody(responseMessages.invalidArray);
   });
 });
 

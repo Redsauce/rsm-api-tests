@@ -1,7 +1,7 @@
 const { spec } = require("pactum");
 const { baseUrl } = require('../../config');
 const { expectedJsonGenericSchema } = require("../../schemas/schemas.js");
-const reponseMessages = require('../../shared/reponseMessages.json');
+const responseMessages = require('../../shared/responseMessages.json');
 require("dotenv").config();
 const token = process.env.RS_TOKEN;
 
@@ -29,7 +29,7 @@ describe("Get image", async () => {
       })
       .expectStatus(404)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.itemNotExist);
+      .expectBody(responseMessages.itemNotExist);
   });
 
   it("Checks error property is not an image", async () => {
@@ -42,7 +42,7 @@ describe("Get image", async () => {
       })
       .expectStatus(404)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.picture.propNotImage);
+      .expectBody(responseMessages.picture.propNotImage);
   });
 
 
@@ -53,7 +53,7 @@ describe("Get image", async () => {
       .withQueryParams("propertyID", "888")
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.mandatoryIDqueryParam);
+      .expectBody(responseMessages.mandatoryIDqueryParam);
   });
   it("Checks error missing propertyID", async () => {
     await spec()
@@ -62,7 +62,7 @@ describe("Get image", async () => {
       .withQueryParams("ID", "88")
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.picture.incorrectBody.propertyID);
+      .expectBody(responseMessages.picture.incorrectBody.propertyID);
   });
   it("Checks error incorrect w", async () => {
     await spec()
@@ -75,7 +75,7 @@ describe("Get image", async () => {
       })
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.picture.incorrectBody.w);
+      .expectBody(responseMessages.picture.incorrectBody.w);
   });
   it("Checks error incorrect h", async () => {
     await spec()
@@ -88,7 +88,7 @@ describe("Get image", async () => {
       })
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.picture.incorrectBody.h);
+      .expectBody(responseMessages.picture.incorrectBody.h);
   });
   it("Checks error incorrect adj", async () => {
     await spec()
@@ -101,6 +101,6 @@ describe("Get image", async () => {
       })
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.picture.incorrectBody.adj);
+      .expectBody(responseMessages.picture.incorrectBody.adj);
   });
 })

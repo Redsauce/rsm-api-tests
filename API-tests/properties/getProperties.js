@@ -1,7 +1,7 @@
 const { spec } = require("pactum");
 const { baseUrl } = require('../../config');
 const { expectedJsonGenericSchema } = require("../../schemas/schemas");
-const reponseMessages = require('../../shared/reponseMessages.json');
+const responseMessages = require('../../shared/responseMessages.json');
 const functions = require('../../shared/sharedFunctions');
 
 require("dotenv").config();
@@ -56,7 +56,7 @@ describe("Get properties", async () => {
       .withBody(body)
       .expectStatus(404)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.itemNotExist);
+      .expectBody(responseMessages.itemNotExist);
   });
 
   it("Checks error request must be a JSON object", async () => {
@@ -71,7 +71,7 @@ describe("Get properties", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidJsonObject);
+      .expectBody(responseMessages.invalidJsonObject);
   });
   it("Checks error request must contain propertyIDs or itemTypeID", async () => {
     const body = { ID: 3 };
@@ -81,7 +81,7 @@ describe("Get properties", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.properties.incorrectBody);
+      .expectBody(responseMessages.properties.incorrectBody);
   });
 
   after(async () => {

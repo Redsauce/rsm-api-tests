@@ -2,7 +2,7 @@ const { spec } = require("pactum");
 const { expect } = require('chai');
 const { baseUrl } = require('../../config');
 const { expectedJsonGenericSchema } = require("../../schemas/schemas");
-const reponseMessages = require('../../shared/reponseMessages.json');
+const responseMessages = require('../../shared/responseMessages.json');
 const functions = require('../../shared/sharedFunctions');
 
 require("dotenv").config();
@@ -31,7 +31,7 @@ describe("Update items tests", async () => {
       .withBody(body)
       .expectStatus(200)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.updateItems.updated);
+      .expectBody(responseMessages.updateItems.updated);
 
     const afterUpdateProperties = await functions.getPersonItems([itemIDs[0]], [58, 59]);
     expect(originalProperties[0]).to.not.deep.equal(afterUpdateProperties[0]);
@@ -79,7 +79,10 @@ describe("Update items tests", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.updateItems.incongruent);
+      .expectBody(responseMessages.updateItems.incongruent);
+
+      const afterProperties = await functions.getPersonItems([itemIDs[0]], [58, 59]);
+      expect(originalProperties[0]).to.deep.equal(afterProperties[0]);
   });
 
   it("Checks error item does not exist", async () => {
@@ -96,8 +99,7 @@ describe("Update items tests", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.itemNotExist);
-
+      .expectBody(responseMessages.itemNotExist);
 
   });
   it("Checks error request must be an array ", async () => {
@@ -120,7 +122,11 @@ describe("Update items tests", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidJsonBody);
+      .expectBody(responseMessages.invalidJsonBody);
+
+    const afterProperties = await functions.getPersonItems([itemIDs[0], itemIDs[1]], [58, 59]);
+    expect(originalProperties[0]).to.deep.equal(afterProperties[0]);
+    expect(originalProperties[1]).to.deep.equal(afterProperties[1]);
   });
   it("Checks error request must be an array of JSON objects ", async () => {
     const body = [
@@ -139,7 +145,11 @@ describe("Update items tests", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.invalidJsonObject);
+      .expectBody(responseMessages.invalidJsonObject);
+
+      
+    const afterProperties = await functions.getPersonItems([itemIDs[0]], [58, 59]);
+    expect(originalProperties[0]).to.deep.equal(afterProperties[0]);
   });
   it("Checks error request ID field not integer ", async () => {
     const body = [{
@@ -154,7 +164,7 @@ describe("Update items tests", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.updateItems.incorrectBody.integerID);
+      .expectBody(responseMessages.updateItems.incorrectBody.integerID);
   });
   it("Checks error request ID field not exists ", async () => {
     const body = [{
@@ -169,7 +179,7 @@ describe("Update items tests", async () => {
       .withBody(body)
       .expectStatus(400)
       .expectJsonSchema(expectedJsonGenericSchema)
-      .expectBody(reponseMessages.updateItems.incorrectBody.id);
+      .expectBody(responseMessages.updateItems.incorrectBody.id);
   });
 
   afterEach(async () => {
