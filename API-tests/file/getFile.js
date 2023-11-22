@@ -8,7 +8,7 @@ const token = process.env.RS_TOKEN;
 
 describe("Get File", async () => {
 
-  // TODO: when enviroment is set, test files!
+  // TODO: when enviroment is set, test files and everything needed!
   // it("Checks a correct get File", async () => {
 
   //     await spec()
